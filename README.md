@@ -11,7 +11,10 @@ BAD-NeRF jointly learns the 3D representation and optimizes the camera motion tr
 
 Here is the [Project page](https://wangpeng000.github.io/BAD-NeRF/).
 
-**[✨Updated Nov 2023]** You can also check out our **nerfstudio**-framework-based implementation: [BAD-NeRFstudio](https://github.com/WU-CVGL/BAD-NeRFstudio). Now you can train a scene from blurry images in minutes!
+## ✨News
+📺 **[2023.12]** We were invited to give an online talk on Bilibili and Wechat, hosted by **计算机视觉life**. Archive of our live stream (in Chinese): [[link to Bilibili]](https://www.bilibili.com/video/BV1Rb4y1G7Ek/)
+
+⚡ **[2023.11]** We made our **nerfstudio**-framework-based implementation: [[BAD-NeRFstudio]](https://github.com/WU-CVGL/BAD-NeRFstudio) public. Now you can train a scene from blurry images in minutes!
 
 ## Novel View Synthesis
 <div><video autoplay loop controls src="https://user-images.githubusercontent.com/43722188/232816090-ced1fbbc-4246-45c6-a265-e7424e754c7b.mp4" muted="true"></video></div>
