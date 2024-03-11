@@ -7,9 +7,10 @@ factor = 1
 
 linear = True
 
-novel_view = False
+novel_view = True
 factor_pose_novel = 2.0
-i_novel_view = 200000
+i_novel_view = 10000
+N_novel_view = 1000
 
 N_rand = 5000
 deblur_images = 7
@@ -23,6 +24,6 @@ raw_noise_std = 1.0
 load_weights = False
 weight_iter = 200000
 
-i_img = 9000
-i_video = 20000
-i_weights = 20000
+i_img = 25000
+i_video = 200000
+i_weights = 10000
