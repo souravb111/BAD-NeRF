@@ -9,7 +9,8 @@ linear = True
 
 novel_view = True
 factor_pose_novel = 2.0
-i_novel_view = 200000
+i_novel_view = 10000  
+N_novel_view = 1000
 
 N_rand = 5000
 deblur_images = 7

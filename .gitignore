@@ -8,3 +8,4 @@ logs*/
 data/
 configs_test/
 weights/
+viz_images/

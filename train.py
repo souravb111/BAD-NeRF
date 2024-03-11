@@ -145,6 +145,7 @@ def train():
     threshold = N_iters + 1
 
     poses_num = poses.shape[0]
+    batch_size = 4
 
     for i in trange(start, threshold):
     ### core optimization loop ###
@@ -153,7 +154,7 @@ def train():
             init_nerf(graph.nerf)
             init_nerf(graph.nerf_fine)
 
-        img_idx = torch.randperm(images.shape[0])
+        img_idx = torch.randperm(images.shape[0])[:batch_size].cpu() # batch size
 
         if (i % args.i_img == 0 or i % args.i_novel_view == 0) and i > 0:
             ret, ray_idx, spline_poses, all_poses = graph.forward(i, img_idx, poses_num, H, W, K, args)
@@ -276,6 +277,7 @@ def train():
             model_test = novel_view_test.Model(poses_test_se3_, graph)
             graph_test = model_test.build_network(args)
             optimizer_test = model_test.setup_optimizer(args)
+            print('running for:', args.N_novel_view)
             for j in range(args.N_novel_view):
                 ret_sharp, ray_idx_sharp, poses_sharp = graph_test.forward(i, img_idx, poses_num, H, W, K, args, novel_view=True)
                 target_s_novel = images_novel.reshape(-1, H*W, 3)[:, ray_idx_sharp]
@@ -307,6 +309,13 @@ def train():
                     outfile.write(f"iter{i}: MSE:{mse_render.item():.8f} PSNR:{psnr_render.item():.8f}"
                                   f" SSIM:{ssim_render.item():.8f} LPIPS:{lpips_render.item():.8f}\n")
 
+            # visualize images ------------------------------------------------
+            # play with i_novel_view in config file ie `BADNerf/configs/cozy2room.txt` to run viz as often as needed
+            # and N_novel_view to iterate on novel views as much as needed
+            for i in range(len(imgs_render_novel)):
+                viz_img(imgs_render_novel[i], f'viz_images/output_image_{i}.png')
+                viz_img(images_novel[i], f'viz_images/gt_image_{i}.png')
+
         if i % args.N_iters == 0 and i > 0:
             # Turn on testing mode
             with torch.no_grad():
@@ -317,6 +326,13 @@ def train():
 
         global_step += 1
 
+def viz_img(img_tensor, out_fn):
+    numpy_image = img_tensor.cpu().detach().numpy()
+    plt.imshow(numpy_image)
+    plt.axis('off')  # Turn off axis numbers and ticks
+    plt.show()
+    plt.savefig(out_fn)
+    plt.clf()
 
 if __name__=='__main__':
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
